@@ -1,9 +1,9 @@
 {
   "name": "apl-lang-simple",
-  "displayName": "APL (Example) — Simple Support",
+  "displayName": "APL (Example) — Language support",
   "description": "VS Code syntax highlighting + simple autocomplete for Example (APL)",
   "version": "0.0.1",
-  "publisher": "your-name",
+  "publisher": "contributor",
   "engines": {
     "vscode": "^1.80.0"
   },
