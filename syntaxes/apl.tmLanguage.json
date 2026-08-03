@@ -116,6 +116,42 @@
           "end": "$",
           "patterns": [
             {
+              "name": "meta.include.apl",
+              "match": "\\b(include)(\\s*)(<)([^>\\r\\n]*)(>)?",
+              "captures": {
+                "1": {
+                  "name": "keyword.control.directive.apl"
+                },
+                "3": {
+                  "name": "punctuation.definition.include.begin.apl"
+                },
+                "4": {
+                  "name": "string.quoted.angle.include.apl"
+                },
+                "5": {
+                  "name": "punctuation.definition.include.end.apl"
+                }
+              }
+            },
+            {
+              "name": "meta.include.apl",
+              "match": "\\b(include)(\\s*)(\")([^\"\\r\\n]*)(\")?",
+              "captures": {
+                "1": {
+                  "name": "keyword.control.directive.apl"
+                },
+                "3": {
+                  "name": "punctuation.definition.include.begin.apl"
+                },
+                "4": {
+                  "name": "string.quoted.double.include.apl"
+                },
+                "5": {
+                  "name": "punctuation.definition.include.end.apl"
+                }
+              }
+            },
+            {
               "name": "keyword.control.directive.apl",
               "match": "\\b(line|include|define|undef|ifdef|ifndef|endif)\\b"
             },
