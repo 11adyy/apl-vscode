@@ -49,6 +49,17 @@
     ],
     "description": "Container method with self parameter"
   },
+  "interface-definition": {
+    "scope": "apl",
+    "prefix": "interface",
+    "body": [
+      "interface ${1:name}${2:::base} {",
+      "\t@[self] @[abstract]",
+      "\tfunction ${3:method}(ptr ${1:name} self)${4: -> ${5:i0}};",
+      "}"
+    ],
+    "description": "Interface method contract"
+  },
   "container-field-access": {
     "scope": "apl",
     "prefix": "field",
@@ -59,6 +70,12 @@
     "scope": "apl",
     "prefix": "container",
     "body": "container",
+    "description": "APL keyword"
+  },
+  "APL Keywords Interface": {
+    "scope": "apl",
+    "prefix": "interface",
+    "body": "interface",
     "description": "APL keyword"
   },
   "import-op": {
@@ -262,6 +279,22 @@
       "@[register(${1:10})]"
     ],
     "description": "Register bindings for variables annotation"
+  },
+  "annotation-abstract": {
+    "scope": "apl",
+    "prefix": "abstractann",
+    "body": [
+      "@[abstract]"
+    ],
+    "description": "Abstract method contract annotation"
+  },
+  "annotation-override": {
+    "scope": "apl",
+    "prefix": "overrideann",
+    "body": [
+      "@[override]"
+    ],
+    "description": "Inherited interface method implementation annotation"
   },
   "annotation-stack": {
     "scope": "apl",
