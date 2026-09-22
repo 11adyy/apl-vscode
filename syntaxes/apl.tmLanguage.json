@@ -177,8 +177,32 @@
     "keywords": {
       "patterns": [
         {
+          "name": "meta.implements.apl",
+          "begin": "\\b(implements)\\b",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.declaration.implements.apl"
+            }
+          },
+          "end": "(?=\\s*\\{)|(?=\\s*(?:\\r?\\n|$))",
+          "patterns": [
+            {
+              "name": "punctuation.separator.implements.apl",
+              "match": ","
+            },
+            {
+              "name": "entity.name.type.interface.cpp",
+              "match": "\\b[A-Za-z_][A-Za-z0-9_]*\\b"
+            }
+          ]
+        },
+        {
           "name": "keyword.declaration.function.apl",
           "match": "\\b(function|container|interface)\\b"
+        },
+        {
+          "name": "keyword.declaration.implements.apl",
+          "match": "\\bimplements\\b"
         },
         {
           "name": "keyword.control.apl",
@@ -201,6 +225,36 @@
           "match": "\\b(syscall|asm|lis|poparg)\\b"
         },
         {
+          "name": "meta.place.apl",
+          "begin": "\\b(place)(\\s*\\()",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.operator.new.apl"
+            }
+          },
+          "end": "\\)",
+          "patterns": [
+            {
+              "name": "meta.place.container-type.apl",
+              "match": "(,\\s*)([A-Za-z_][A-Za-z0-9_]*)\\b(?=\\s*\\))",
+              "captures": {
+                "2": {
+                  "name": "entity.name.type.struct.c"
+                }
+              }
+            },
+            {
+              "include": "#keywords"
+            },
+            {
+              "include": "#types"
+            },
+            {
+              "include": "#variables"
+            }
+          ]
+        },
+        {
           "name": "keyword.other.operatorlike.apl",
           "match": "\\b(as|ref|dref|not|neg)\\b"
         }
@@ -217,15 +271,45 @@
           "match": "\\b(str|arr|ptr|fn)\\b"
         },
         {
-          "name": "storage.type.user.apl",
+          "name": "entity.name.type.struct.c",
           "match": "\\b[A-Za-z_][A-Za-z0-9_]*\\b(?=\\s+[A-Za-z_][A-Za-z0-9_]*\\s*(?:=|;|,|\\)|\\[))"
+        },
+        {
+          "name": "meta.pointer.container-type.apl",
+          "match": "\\b(ptr)(\\s+)([A-Za-z_][A-Za-z0-9_]*)\\b(?=\\s+[A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "storage.type.other.apl"
+            },
+            "3": {
+              "name": "entity.name.type.struct.c"
+            }
+          }
+        },
+        {
+          "name": "meta.array.element-type.apl",
+          "match": "(,\\s*)(f64|f32|i64|i32|i16|i8|u64|u32|u16|u8|i0)\\b(?=\\s*\\])",
+          "captures": {
+            "2": {
+              "name": "storage.type.primitive.apl"
+            }
+          }
+        },
+        {
+          "name": "meta.array.element-type.apl",
+          "match": "(,\\s*)(str)\\b(?=\\s*\\])",
+          "captures": {
+            "2": {
+              "name": "storage.type.other.apl"
+            }
+          }
         },
         {
           "name": "meta.array.element-type.apl",
           "match": "(,\\s*)([A-Za-z_][A-Za-z0-9_]*)\\b(?=\\s*\\])",
           "captures": {
             "2": {
-              "name": "storage.type.user.apl"
+              "name": "entity.name.type.struct.c"
             }
           }
         }
@@ -242,11 +326,11 @@
     "functions": {
       "patterns": [
         {
-          "name": "entity.name.type.container.apl",
+          "name": "entity.name.type.struct.c",
           "match": "(?<=\\bcontainer\\s+)[A-Za-z_][A-Za-z0-9_]*"
         },
         {
-          "name": "entity.name.type.interface.apl",
+          "name": "entity.name.type.interface.cpp",
           "match": "(?<=\\binterface\\s+)[A-Za-z_][A-Za-z0-9_]*"
         },
         {
@@ -254,7 +338,7 @@
           "match": "(?<=\\bfunction\\s+)([A-Za-z_][A-Za-z0-9_]*)(\\s*)(::)(\\s*)([A-Za-z_][A-Za-z0-9_]*)",
           "captures": {
             "1": {
-              "name": "storage.type.user.apl"
+              "name": "entity.name.type.struct.c"
             },
             "3": {
               "name": "keyword.operator.scope.apl"
@@ -273,7 +357,7 @@
           "match": "\\b([A-Za-z_][A-Za-z0-9_]*)(\\s*)(::)(\\s*)([A-Za-z_][A-Za-z0-9_]*)\\b(?=\\s*(?:<[^>\\r\\n]*>\\s*)?\\()",
           "captures": {
             "1": {
-              "name": "storage.type.user.apl"
+              "name": "entity.name.type.struct.c"
             },
             "3": {
               "name": "keyword.operator.scope.apl"
@@ -285,7 +369,7 @@
         },
         {
           "name": "meta.function.call.generic.apl",
-          "begin": "\\b(?!if\\b|while\\b|switch\\b|asm\\b|syscall\\b|start\\b|function\\b|container\\b|interface\\b|section\\b|align\\b)([A-Za-z_][A-Za-z0-9_]*)(\\s*)(<)(?=[^>\\r\\n]*>\\s*\\()",
+          "begin": "\\b(?!if\\b|while\\b|switch\\b|asm\\b|syscall\\b|start\\b|function\\b|container\\b|interface\\b|implements\\b|section\\b|align\\b|place\\b)([A-Za-z_][A-Za-z0-9_]*)(\\s*)(<)(?=[^>\\r\\n]*>\\s*\\()",
           "beginCaptures": {
             "1": {
               "name": "entity.name.function.call.apl"
@@ -315,7 +399,7 @@
         },
         {
           "name": "entity.name.function.call.apl",
-          "match": "\\b(?!if\\b|while\\b|switch\\b|asm\\b|syscall\\b|start\\b|function\\b|container\\b|interface\\b|section\\b|align\\b)[A-Za-z_][A-Za-z0-9_]*\\b(?=\\s*(?:<[^>\\r\\n]*>\\s*)?\\()"
+          "match": "\\b(?!if\\b|while\\b|switch\\b|asm\\b|syscall\\b|start\\b|function\\b|container\\b|interface\\b|implements\\b|section\\b|align\\b|place\\b)[A-Za-z_][A-Za-z0-9_]*\\b(?=\\s*(?:<[^>\\r\\n]*>\\s*)?\\()"
         }
       ]
     },
@@ -410,7 +494,7 @@
               "name": "keyword.declaration.function.apl"
             },
             "2": {
-              "name": "storage.type.user.apl"
+              "name": "entity.name.type.struct.c"
             },
             "4": {
               "name": "keyword.operator.scope.apl"
